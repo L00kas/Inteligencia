@@ -4,14 +4,17 @@
  */
 package TPFinalIAII;
 
-import TPFinalIAII.interfaz.ventanita;
+import TPFinalIAII.interfaz.ventanaPrincipal;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Dei Castelli - Nudelman - Witzke
+ */
 public class Controladora {
     
-    
     public static void main(String[] args) {
-        ventanita unaVentana = new ventanita();
+        ventanaPrincipal unaVentana = new ventanaPrincipal();
         unaVentana.setVisible(true);
     }
     
@@ -27,7 +30,7 @@ public class Controladora {
         
         //Calcular la peor aptitud
         int maximaAptitud = obtenerMaximaAptitud(restricciones);
-
+        
         //Generar hilo
         AlgoritmoGenetico hilo1 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);
         AlgoritmoGenetico hilo2 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);

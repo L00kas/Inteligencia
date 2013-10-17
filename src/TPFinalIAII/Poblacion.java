@@ -6,6 +6,10 @@ import java.util.TreeSet;
 import java.util.Random;
 import java.util.Iterator;
 
+/**
+ *
+ * @author Dei Castelli - Nudelman - Witzke
+ */
 public class Poblacion {
 
     private Set<Individuo> individuos = new TreeSet();

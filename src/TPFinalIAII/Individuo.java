@@ -8,6 +8,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+/**
+ *
+ * @author Dei Castelli - Nudelman - Witzke
+ */
 public class Individuo implements Comparable {
 
     private double aptitud;

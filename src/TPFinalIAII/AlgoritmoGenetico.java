@@ -1,7 +1,12 @@
 package TPFinalIAII;
 
+import TPFinalIAII.interfaz.ventanaPrincipal;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Dei Castelli - Nudelman - Witzke
+ */
 public class AlgoritmoGenetico extends Thread{
 
     int maximaAptitud;
@@ -38,7 +43,10 @@ public class AlgoritmoGenetico extends Thread{
 
         //generar poblaciones nuevas a partir de una vieja mientras no se alcance un individuo resultado
         while (poblacionActual.esSolucion() == null) {
+            
+            
             System.out.println("Población Número: " + poblacionNumero + " Aptitud: " + poblacionActual.aptitudProm() + " %Mutación: " + porcentajeMutacion + " Cantided de porblación: "+ poblacionActual.getIndividuos().size());
+            
             
             poblacionNueva = new Poblacion(operacion, cantIndividuos, poblacionActual, restricciones, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, maximaAptitud);
             poblacionActual = poblacionNueva;
