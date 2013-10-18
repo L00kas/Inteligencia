@@ -30,30 +30,31 @@ public class Controladora {
         
         //Calcular la peor aptitud
         int maximaAptitud = obtenerMaximaAptitud(restricciones);
-        
-        //Generar hilo
         AlgoritmoGenetico hilo1 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);
-        AlgoritmoGenetico hilo2 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);
-        AlgoritmoGenetico hilo3 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);
-        
-        //Ejecutar los hilos
         hilo1.start();
-        hilo2.start();
-        hilo3.start();
-        
-        
-        while ((hilo1.isAlive()) && (hilo2.isAlive()) && (hilo3.isAlive())){   
-        }
-        
-        if (hilo1.isAlive()){
-            hilo1.stop();
-        }
-        if (hilo2.isAlive()){
-            hilo2.stop();
-        }
-        if (hilo3.isAlive()){
-            hilo3.stop();
-        }
+        //Generar hilo
+//        AlgoritmoGenetico hilo1 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);
+//        AlgoritmoGenetico hilo2 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);
+//        AlgoritmoGenetico hilo3 = new AlgoritmoGenetico(maximaAptitud, operacion, cantIndividuos, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion, lambda, restricciones);
+//        
+//        //Ejecutar los hilos
+//        hilo1.start();
+//        hilo2.start();
+//        hilo3.start();
+//        
+//        
+//        while ((hilo1.isAlive()) && (hilo2.isAlive()) && (hilo3.isAlive())){   
+//        }
+//        
+//        if (hilo1.isAlive()){
+//            hilo1.stop();
+//        }
+//        if (hilo2.isAlive()){
+//            hilo2.stop();
+//        }
+//        if (hilo3.isAlive()){
+//            hilo3.stop();
+//        }
     }
     
     //Genera las restricciones dada la operacion

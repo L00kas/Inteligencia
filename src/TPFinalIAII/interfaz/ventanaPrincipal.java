@@ -7,26 +7,77 @@ package TPFinalIAII.interfaz;
 import javax.swing.table.DefaultTableModel;
 
 import TPFinalIAII.Controladora;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
  * @author Lucas
  */
 public class ventanaPrincipal extends javax.swing.JFrame {
-
-    DefaultTableModel modelo;
-
+    
+    
     /**
      * Creates new form ventanaPrincipal
      */
     public ventanaPrincipal() {
-        initComponents();
-        
+        initComponents();        
     }
 
-    public void addTabla(int nIteracion, double aptPromedio, int porcentajeSeleccion, int porcentajeCruza, int porcentajeMutacion) {
-        Object datos[] = {nIteracion, aptPromedio, porcentajeSeleccion, porcentajeCruza, porcentajeMutacion};
-        modelo.addRow(datos);
+    public static void addTabla(DefaultTableModel modelo) {               
+        jTableIteraciones.setModel(modelo);        
+    }
+    
+    public static void graficar(double []aptitudProm){
+        double [] auxiliar ; int cont=0;
+        for(int i=0; i<aptitudProm.length;i++){
+            if(aptitudProm[i] == 0 && i!=0){
+                i=aptitudProm.length;
+            }
+            cont++;           
+        }
+        auxiliar = new double [cont];
+        System.arraycopy(aptitudProm, 0, auxiliar, 0, auxiliar.length);
+        XYSeries series = new XYSeries("XYGraph");       
+        for (int i=1; (i<cont);i++){
+            series.add(i,auxiliar[i]);
+            
+        }        
+        // Add the series to your data set
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+        // Generate the graph
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                "XY Chart", // Title
+                "x-axis", // x-axis Label
+                "y-axis", // y-axis Label
+                dataset, // Dataset
+                PlotOrientation.VERTICAL, // Plot Orientation
+                true, // Show Legend
+                true, // Use tooltips
+                false // Configure chart to generate URLs?
+                );         
+       // jPanel1 = new ChartPanel (chart);
+        XYPlot plot = (XYPlot) chart.getPlot();
+        plot.setBackgroundPaint(Color.LIGHT_GRAY);
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setRangeGridlinePaint(Color.white);
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer)plot.getRenderer();
+        renderer.setSeriesPaint(0, Color.BLUE);
+        BufferedImage graficoLinea = null;
+        graficoLinea = chart.createBufferedImage(590, 220);
+        jLabelGrafica.setIcon(new ImageIcon(graficoLinea));
+        jPanel1.updateUI();
     }
 
     /**
@@ -53,8 +104,8 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldMutacion1 = new javax.swing.JTextField();
         jButtonCalcular = new javax.swing.JButton();
-        jButtonLimpiar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabelGrafica = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableIteraciones = new javax.swing.JTable();
@@ -121,13 +172,6 @@ public class ventanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButtonLimpiar.setText("Limpiar");
-        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimpiarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -135,32 +179,30 @@ public class ventanaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxCantidadIndividuos, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextFieldMutacion1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(jTextFieldMutacion, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextFieldCruza, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextFieldSeleccion, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxCantidadIndividuos, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextFieldMutacion1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                                .addComponent(jTextFieldMutacion, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextFieldCruza, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextFieldSeleccion, javax.swing.GroupLayout.Alignment.LEADING))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jButtonCalcular)
+                        .addGap(23, 23, 23)))
                 .addContainerGap(78, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextOperacion))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonCalcular)))
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextOperacion)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -191,9 +233,7 @@ public class ventanaPrincipal extends javax.swing.JFrame {
                     .addComponent(jTextFieldMutacion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCalcular)
-                    .addComponent(jButtonLimpiar))
+                .addComponent(jButtonCalcular)
                 .addContainerGap())
         );
 
@@ -203,11 +243,16 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelGrafica, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabelGrafica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Iteraciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 14))); // NOI18N
@@ -325,10 +370,6 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldMutacion1ActionPerformed
 
-    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonLimpiarActionPerformed
-
     private void jButtonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalcularActionPerformed
         Controladora.comenzarAlgoritmo(jTextOperacion.getText(), Integer.parseInt(jComboBoxCantidadIndividuos.getSelectedItem().toString()), Integer.parseInt(jTextFieldSeleccion.getText()),
                 (Integer.parseInt(jTextFieldCruza.getText())), Integer.parseInt(jTextFieldMutacion.getText()), ((double) 25) / 100000);
@@ -371,7 +412,6 @@ public class ventanaPrincipal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCalcular;
-    private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JComboBox jComboBoxCantidadIndividuos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -380,13 +420,14 @@ public class ventanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
+    private static javax.swing.JLabel jLabelGrafica;
+    private static javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableIteraciones;
+    private static javax.swing.JTable jTableIteraciones;
     private javax.swing.JTextField jTextFieldCruza;
     private javax.swing.JTextField jTextFieldMutacion;
     private javax.swing.JTextField jTextFieldMutacion1;
