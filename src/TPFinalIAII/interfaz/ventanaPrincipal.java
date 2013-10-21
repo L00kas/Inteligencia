@@ -49,7 +49,7 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         auxiliar = new double [cont];
         System.arraycopy(aptitudProm, 0, auxiliar, 0, auxiliar.length);
         XYSeries series = new XYSeries("XYGraph");       
-        for (int i=1; (i<cont);i++){
+        for (int i=0; (i<cont);i++){
             series.add(i,auxiliar[i]);
             
         }        

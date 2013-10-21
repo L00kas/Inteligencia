@@ -41,6 +41,7 @@ public class AlgoritmoGenetico extends Thread{
                  //Generar primer población ALEATORIA        
         poblacionActual = new Poblacion(operacion, cantIndividuos, restricciones);
         
+        y[poblacionNumero] = poblacionActual.aptitudProm();
         int valorMax = ((int) (0.50 * cantIndividuos));
         double acumulador = 0;
 
